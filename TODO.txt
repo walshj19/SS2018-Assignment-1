@@ -1,0 +1,6 @@
+- three threads, one checking the time, create one for each new backup command
+- backup command should have a lock on the folder
+- one thread should just wait for user input
+- time is hard
+	- reference the infinite undo article "falsehoods programmers believe about time"
+	- 
