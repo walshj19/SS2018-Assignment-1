@@ -1,6 +1,26 @@
 - three threads, one checking the time, create one for each new backup command
 - backup command should have a lock on the folder
 - one thread should just wait for user input
-- time is hard
+
+- timer
+	- needs to trigger once a day at midnight
+	- time is hard
 	- reference the infinite undo article "falsehoods programmers believe about time"
 	- 
+
+- logging
+	- log everything
+	- syslog
+
+- backup
+	- copy the contents of the specified location to a new location
+	- use exec
+	- how to check for success/failure
+	- make sure the backup folder exists before copying to it
+	- source and dest should be args
+	- do I need to call ls to get the list of files before
+
+- changed files
+	- how to keep track of changed files
+
+- lock
