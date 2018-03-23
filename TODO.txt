@@ -19,6 +19,11 @@
 	- make sure the backup folder exists before copying to it
 	- source and dest should be args
 	- do I need to call ls to get the list of files before
+	- does it need to be recursive
+	- path names have a max length so they can be pre allocated
+	- there could be any number of files in a direcrory(unlimited) so count them before allocating memory
+	- program should pass arguments to ls to only show files we want
+	- free memory
 
 - changed files
 	- how to keep track of changed files
