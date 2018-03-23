@@ -6,7 +6,7 @@ int main ()
 {
 	char **files;		// holds the list of files to be copied
 
-	get_file_names();
+	get_file_names(files);
 	return 0;
 }
 
@@ -22,18 +22,18 @@ int copy_files ()
 
 /* Use ls to get a list of files in the www directory.
  */
-int get_file_names ()
+int get_file_names (char **files)
 {
 	FILE *fp;
 	int status;
 	char path[1024];
-	char **files;
 
 	fp = popen("ls ./testwww/*.html", "r");
 
 	while(fgets(path, 1024, fp) != NULL)
 	{
 		printf("%s", path);
+		
 	}
 
 	status = pclose(fp);
