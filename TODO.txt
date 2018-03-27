@@ -6,7 +6,7 @@
 	- needs to trigger once a day at midnight
 	- time is hard
 	- reference the infinite undo article "falsehoods programmers believe about time"
-	- 
+	- use cron
 
 - logging
 	- log everything
@@ -24,8 +24,17 @@
 	- there could be any number of files in a direcrory(unlimited) so count them before allocating memory
 	- program should pass arguments to ls to only show files we want
 	- free memory
+	- use cp
+		- use the -u flag to cp to only copy updates and new files
+	- to trigger the backup using cron, pgrep for the pid then send the backup signal
+		- command: kill -10 $(pgrep backupd)
 
 - changed files
 	- how to keep track of changed files
 
+- track changes
+	- use auditd to to record edits to the folder
+		- command: auditctl -w /var/www/html/dev/ -p w
+
 - lock
+	-

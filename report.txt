@@ -1,0 +1,38 @@
+Setup and Running the daemon
+	Start the daemon
+	Add the cron job
+	Turn on auditing
+
+
+Design
+
+Locking
+	The program uses a lock file to ensure only one backup is performed at a time, before the program starts the update and backup it creates a file in the backup folder, once it has finished the update and backup it deletes the lock file. When the program starts a backup it checks for the lock file and if one already exists it assumes a backup is already underway and returns. The implementation could run into an issue if it failed during the update after it has created the lock file, to mitigate this if a lockfile is found on subsequent updates it is logged so that the issue could be identified.
+
+Auditing
+	The client required logs to be kept of all the edits made to the dev site. This was done using unix auditd which was configured with the command:
+	auditctl -w /var/www/html/dev/ -p w
+	This will watch for any writes made to the contents of the dev folder and log any that occur. The log file can be found at /var/log/audit/audit.log
+
+Discretionary Backups
+	Once started the daemon runs constantly in the background and waits for a signal SIGUSR1=10 to trigger a backup. At any point while it is running a signal can be sent to the program and it will immediately start a backup.
+	The following command will trigger a backup:
+	kill -10 $(pgrep backupd)
+
+Scheduled Backups
+	As described in this article [1] computers and time do not mix well, I wouldn't know where to begin tackling the problems that would arise trying write a program to do something on a regular schedule, but I presume Paul Vixie did a better job than I would have. My solution uses the cron utility, by adding the following entry to the system crontab the command to trigger a backup can be run every night at midnight:
+	0	0	*	*	*	kill -10 $(pgrep backupd)
+
+Backup and Update
+	When a backup is triggered the daemon calls the cp system command with the popen function to execute both the backup and the update to the production site. The -u flag is set so that only updated files will be copied.
+
+Daemon
+	When the program is run it forks a new process, the orignal terminal process terminates and the new child disconnects itself from the terminal and runs continuously in the background. The daemon runs from the root directory and follows the setup guidelines detailed by Dave Lennert [2].
+
+Logging
+	The daemon utilizes syslog to log events within the program as it is built in to unix and provides all of the required functionality.
+
+
+References
+[1] http://infiniteundo.com/post/25326999628/falsehoods-programmers-believe-about-time
+[2] http://cjh.polyplex.org/software/daemon.pdf
