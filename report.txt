@@ -1,3 +1,6 @@
+Name: James Walsh
+SN: D16124837
+
 Setup and Running the daemon
 	To start the deamon just run the program backupd, it takes no command line parameters.
 	Run "crontab -e" and add the entry "0 0 * * * kill -10 $(pgrep backupd)" to schedule backups.
