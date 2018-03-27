@@ -1,7 +1,7 @@
 Setup and Running the daemon
-	Start the daemon
-	Add the cron job
-	Turn on auditing
+	To start the deamon just run the program backupd, it takes no command line parameters.
+	Run "crontab -e" and add the entry "0 0 * * * kill -10 $(pgrep backupd)" to schedule backups.
+	Run "auditctl -w /var/www/html/dev/ -k backupd" as root to start logging events on the files in the dev folder.
 
 
 Design
